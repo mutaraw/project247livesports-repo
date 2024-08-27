@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2#yt$rc*9(ej3jl&w2e01v4ks9oaxd-j%%m!=qwx4^6k+b+d2u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['www.247livesports.com', '247livesports.com', '127.0.0.1', '18.189.13.141']
 
