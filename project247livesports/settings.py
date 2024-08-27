@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-2#yt$rc*9(ej3jl&w2e01v4ks9oaxd-j%%m!=qwx4^6k+b+d2u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.247livesports.com', '247livesports.com', '127.0.0.1', 'https://d1oxgwekcm5ysg.cloudfront.net', '18.189.13.141']
+ALLOWED_HOSTS = ['www.247livesports.com', '247livesports.com', '127.0.0.1', '18.189.13.141']
 
 # Application definition
 
@@ -132,8 +132,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_HOST = "https://d1oxgwekcm5ysg.cloudfront.net" if not DEBUG else ""
-STATIC_URL = STATIC_HOST + "/static/"
+# STATIC_HOST = "https://d1oxgwekcm5ysg.cloudfront.net" if not DEBUG else ""
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STORAGES = {
