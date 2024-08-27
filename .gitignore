@@ -1,12 +1,23 @@
 # IDE configuration files
 .idea/
 
+# Pycharm
+*.iml
+
+# Visual Studio Code
+.vscode/
+
+# Python bytecode and cache
 # Python bytecode and cache
 __pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyp
+*~$py.class
 
 # OS-specific files
 .DS_Store
 
 # Virtual environment
-venv/*.pyc
-__pycache__/
+venv/
