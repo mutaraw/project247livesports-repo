@@ -1,0 +1,11 @@
+# IDE configuration files
+.idea/
+
+# Python bytecode and cache
+__pycache__/
+
+# OS-specific files
+.DS_Store
+
+# Virtual environment
+venv/
