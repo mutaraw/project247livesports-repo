@@ -73,7 +73,7 @@ main {
 }
 
 .tab.active {
-    background: tomato;
+    background: orangered;
 }
 
 #favorites-container {
@@ -129,37 +129,56 @@ main {
 
 .card-head-left {
     grid-area: card-head-left;
-    display: flex;
+    padding: 5px;
+    display: grid;
+    grid-template-rows: auto auto;
     gap: 5px;
+}
+
+.country-info,
+.league-info {
+    display: flex;
     align-items: center;
     justify-content: left;
-    padding: 10px;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
+    gap: 5px;
+}
+
+.league-info {
+    font-size: 12px;
 }
 
 .card-head-left img {
     width: 20px;
     height: 20px;
-    border-radius: 2px;
+    border-radius: 5px;
 }
 
 .card-head-right {
     grid-area: card-head-right;
-    display: flex;
-    gap: 5px;
-    align-items: center;
-    justify-content: right;
-    padding: 10px;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
-    background: tomato;
-    font-weight: bold;
+    background: orangered;
     color: #ffffff;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    padding: 5px;
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 5px;
+}
+
+.card-date, .card-time {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    gap: 5px;
 }
 
 .card-body {
@@ -235,7 +254,11 @@ main {
         opacity: 1;
     }
     50% {
-        opacity: 0;
+        opacity: 0.1;
+    }
+
+    100% {
+        opacity: 1;
     }
 }
 
@@ -254,7 +277,6 @@ main {
     grid-template-rows: auto auto;
     gap: 5px;
     border-right: 1px solid #aaa;
-    color: red;
 }
 
 .status-short {
@@ -268,6 +290,7 @@ main {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
+    color: orangered;
 }
 
 .status-elapsed {
@@ -281,6 +304,7 @@ main {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
+    color: orangered;
 }
 
 .home-team-winner {
@@ -316,7 +340,19 @@ main {
 #favorites-container .fa-arrow-up,
 #live .fa-arrow-up {
     color: green;
-    animation: blink 1s infinite;
+    animation: blink 2s infinite;
+}
+
+#favorites-container .fa-arrow-down,
+#live .fa-arrow-down {
+    color: red;
+    animation: blink 2s infinite;
+}
+
+#favorites-container .fa-arrows-up-down,
+#live .fa-arrows-up-down {
+    color: orange;
+    animation: blink 2s infinite;
 }
 
 .fa-arrow-down {

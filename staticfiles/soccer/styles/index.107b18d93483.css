@@ -277,6 +277,7 @@ main {
     grid-template-rows: auto auto;
     gap: 5px;
     border-right: 1px solid #aaa;
+    color: red;
 }
 
 .status-short {
@@ -290,7 +291,6 @@ main {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
-    color: orangered;
 }
 
 .status-elapsed {
@@ -304,7 +304,6 @@ main {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
-    color: orangered;
 }
 
 .home-team-winner {

@@ -1,17 +1,42 @@
 let groupedFixtures = {};  // Will be populated by WebSocket data
 const socketProtocol = (window.location.protocol === 'https:') ? 'wss://' : 'ws://';
-const socket = new WebSocket(socketProtocol + window.location.host + '/ws/fixtures/');
-
-socket.onmessage = function (e) {
-    const data = JSON.parse(e.data);
-    groupedFixtures = data.fixtures;  // Update global variable
-    updateUI();
-};
+let socket;
 
 document.addEventListener('DOMContentLoaded', function () {
     const lastTab = localStorage.getItem('selectedTab') || 'live';
     showTab(lastTab);
+    reconnectWebSocket();  // Initial WebSocket connection
 });
+
+function reconnectWebSocket() {
+    socket = new WebSocket(socketProtocol + window.location.host + '/ws/fixtures/');
+
+    socket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        groupedFixtures = data.fixtures;  // Update global variable
+        updateUI();
+    };
+
+    socket.onclose = function () {
+        // Attempt to reconnect every 5 seconds if the connection closes
+        setTimeout(reconnectWebSocket, 5000);
+    };
+}
+
+document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible' && socket.readyState !== WebSocket.OPEN) {
+        reconnectWebSocket();
+    }
+});
+
+function sendHeartbeat() {
+    if (socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({type: 'heartbeat'}));
+    }
+}
+
+// Send a heartbeat every 30 seconds
+setInterval(sendHeartbeat, 30000);
 
 function showTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(section => {
@@ -78,20 +103,28 @@ function renderFixtures(fixtures) {
             if (fixtures[league][date] && fixtures[league][date].length > 0) {
                 const utcDate = new Date(date + ' UTC');
                 const localDate = convertToLocalTime(utcDate);
-                const formattedDate = formatLocalDate(localDate);
+                const formattedDate = formatLocalDateWithFallback(localDate);
+                const [datePart, timePart] = formattedDate.split('@').map(part => part.trim());
 
                 html += `<div class="card">
                     <div class="card-head">
                         <div class="card-head-left">
-                            ${fixtures[league][date][0].league_country_flag ?
+                            <div class="country-info">
+                                ${fixtures[league][date][0].league_country_flag ?
                     `<img src="${fixtures[league][date][0].league_country_flag}" alt="${fixtures[league][date][0].league_country}" loading="lazy"/>` : ''}
-                            ${fixtures[league][date][0].league_logo ?
+                                ${fixtures[league][date][0].league_country ?
+                    `<div>${fixtures[league][date][0].league_country}</div>` : ''}
+                            </div>
+                            <div class="league-info">
+                                ${fixtures[league][date][0].league_logo ?
                     `<img src="${fixtures[league][date][0].league_logo}" alt="${fixtures[league][date][0].league_name}" loading="lazy"/>` : ''}
-                            ${fixtures[league][date][0].league_country && fixtures[league][date][0].league_name ?
-                    `<div>${fixtures[league][date][0].league_country} : ${fixtures[league][date][0].league_name}</div>` : ''}
+                                ${fixtures[league][date][0].league_name ?
+                    `<div>${fixtures[league][date][0].league_name}</div>` : ''}
+                            </div>
                         </div>
                         <div class="card-head-right">
-                            <div class="card-date">${formattedDate}</div>
+                            <div class="card-date">${datePart}</div>
+                            <div class="card-time">${timePart}</div>
                         </div>
                     </div>
                     <div class="card-body">`;
@@ -133,7 +166,7 @@ function renderFixtures(fixtures) {
                         </div>
                         <div class="statuses">
                             <div class="status-short">
-                                ${fixture.status_short ? `<div>${fixture.status_short}</div>` : ''}
+                                ${fixture.status_long ? `<div>${fixture.status_long}</div>` : ''}
                             </div>
                             <div class="status-elapsed">
                                 ${fixture.status_elapsed ? `<div>${fixture.status_elapsed}<span>'</span></div>` : ''}
@@ -158,8 +191,9 @@ function renderFixtures(fixtures) {
     return html;
 }
 
+
 function renderFavorites(favorites, groupedFixtures) {
-    let html = '<div style="padding: 10px; background: tomato; border-radius: 5px; color: #ffffff; font-size: 16px; font-weight:bold;"><i class="fa-solid fa-star" style="font-weight: bold; font-size: 18px;"></i> Favorite Live Matches</div>';
+    let html = '<div style="padding: 10px; background: orangered; border-radius: 5px; color: #ffffff; font-size: 16px; font-weight:bold;"><i class="fa-solid fa-star" style="font-weight: bold; font-size: 18px;"></i> Favorite Live Matches</div>';
     let foundFavorites = false;
 
     for (let league in groupedFixtures.live) {
@@ -203,7 +237,7 @@ function renderFavorites(favorites, groupedFixtures) {
                             </div>
                             <div class="statuses">
                                 <div class="status-short">
-                                    ${fixture.status_short ? `<div>${fixture.status_short}</div>` : ''}
+                                    ${fixture.status_long ? `<div>${fixture.status_long}</div>` : ''}
                                 </div>
                                 <div class="status-elapsed">
                                     ${fixture.status_elapsed ? `<div>${fixture.status_elapsed}<span>'</span></div>` : ''}
@@ -226,24 +260,37 @@ function renderFavorites(favorites, groupedFixtures) {
     }
 
     if (!foundFavorites) {
-        html += '<p style="text-align: center;">No favorite matches yet. Click the star icon to see them appear here.</p>';
+        html += '<p style="text-align: center;">Click the star icon to follow a live match.</p>';
     }
 
     return html;
 }
 
-function convertToLocalTime(date) {
-    return new Date(date.toLocaleString('en-US', {timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone}));
+function convertToLocalTime(dateString) {
+    return new Date(dateString.toLocaleString('en-US', {timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone}));
 }
 
-function formatLocalDate(date) {
-    const options = {
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true,
-    };
-    return date.toLocaleString('en-US', options).replace(',', ' @');
+function formatLocalDateWithFallback(date) {
+    // Try first format: Aug-27 @ 15:30
+    const options1 = {month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false};
+    const formatted1 = date.toLocaleString('en-US', options1).replace(',', ' @');
+
+    // Try second format: 27-Aug @ 15:30
+    const options2 = {day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false};
+    const formatted2 = date.toLocaleString('en-US', options2).replace(',', ' @');
+
+    // Fallback format: 15:30
+    const optionsFallback = {hour: '2-digit', minute: '2-digit', hour12: false};
+    const formattedFallback = date.toLocaleString('en-US', optionsFallback);
+
+    // Check validity of date and return the best format
+    if (isNaN(date.getTime())) {
+        return 'Invalid Date';
+    } else if (formatted1 !== 'Invalid Date') {
+        return formatted1;
+    } else if (formatted2 !== 'Invalid Date') {
+        return formatted2;
+    } else {
+        return formattedFallback;
+    }
 }
