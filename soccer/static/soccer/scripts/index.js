@@ -1,5 +1,6 @@
 let groupedFixtures = {};  // Will be populated by WebSocket data
-const socket = new WebSocket('ws://' + window.location.host + '/ws/fixtures/');
+const socketProtocol = (window.location.protocol === 'https:') ? 'wss://' : 'ws://';
+const socket = new WebSocket(socketProtocol + window.location.host + '/ws/fixtures/');
 
 socket.onmessage = function (e) {
     const data = JSON.parse(e.data);
