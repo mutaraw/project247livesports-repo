@@ -2,30 +2,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>247 Live Sports | Soccer | Top Leagues and Teams | 247livesports.com</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>247livesports.com | Live, Finished, Upcoming Soccer Scores & Fixtures - Real-Time Updates</title>
 
-    <!-- SEO Meta Tags -->
+    <!-- Meta Tags for SEO -->
     <meta name="description"
-          content="Watch live soccer from top leagues like Premier League, La Liga, Serie A, and follow top teams like Manchester United, Barcelona, and Juventus. Stay updated with live scores on 247 Live Sports.">
+          content="247 Live Sports: Watch live, finished, upcoming, and scheduled soccer matches with real-time updates. Follow top leagues like Premier League, La Liga, Serie A, and more on 247livesports.com. Fast updates, minimal ads, and global coverage.">
     <meta name="keywords"
-          content="Premier League, La Liga, Serie A, Bundesliga, Ligue 1, Manchester United, Barcelona, Juventus, Real Madrid, PSG, live soccer, football streaming, live sports">
+          content="live soccer, finished matches, upcoming fixtures, scheduled games, real-time updates, happening now, current scores, Premier League, La Liga, Serie A, Bundesliga, Ligue 1, football scores, minimal ads, global football">
     <meta name="author" content="247 Live Sports">
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="copyright" content="&copy; 2024 247livesports.com All Rights Reserved.">
 
     <!-- Open Graph Meta Tags for Social Media Sharing -->
-    <meta property="og:title" content="247 Live Sports | Soccer | Top Leagues and Teams | 247livesports.com">
+    <meta property="og:title"
+          content="247livesports.com | Live, Finished, Upcoming Soccer Scores & Fixtures - Real-Time Updates">
     <meta property="og:description"
-          content="Watch live soccer from top leagues and follow top teams with live scores on 247 Live Sports.">
+          content="247 Live Sports: Real-time updates for live, finished, upcoming, and scheduled soccer matches. Fast updates, minimal ads, and global coverage on 247livesports.com.">
     <meta property="og:image" content="{% static 'soccer/images/icon.webp' %}">
     <meta property="og:url" content="https://www.247livesports.com">
     <meta property="og:type" content="website">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="247 Live Sports | Soccer | Top Leagues and Teams | 247livesports.com">
+    <meta name="twitter:title"
+          content="247livesports.com | Live, Finished, Upcoming Soccer Scores & Fixtures - Real-Time Updates">
     <meta name="twitter:description"
-          content="Watch live soccer from top leagues like Premier League, La Liga, Serie A, and follow top teams with live scores on 247 Live Sports.">
+          content="247 Live Sports: Real-time updates for live, finished, upcoming, and scheduled soccer matches. Fast updates, minimal ads, and global coverage on 247livesports.com.">
     <meta name="twitter:image" content="{% static 'soccer/images/icon.webp' %}">
 
     <!-- Favicon -->
@@ -34,11 +38,14 @@
     <!-- CSS Stylesheets -->
     <link rel="stylesheet" href="{% static 'soccer/styles/index.css' %}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://www.247livesports.com/">
 </head>
 
 <body>
 <header>
-    <img class="site-logo" src="{% static 'soccer/images/icon.webp' %}" alt="logo"/>
+    <img class="site-logo" src="{% static 'soccer/images/icon.webp' %}" alt="247livesports logo"/>
     <div class="site-name">247livesports.com</div>
 </header>
 <main>
@@ -69,8 +76,6 @@
 <footer>
     <div class="footer-content">
         <p>&copy; 2024 247livesports.com All Rights Reserved.</p>
-        {#        <p><a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-of-service">Terms of Service</a> | <a#}
-        {#                href="/about">About Us</a> | <a href="/contact">Contact Us</a></p>#}
         <p>Top Leagues: Premier League | La Liga | Serie A | Bundesliga | Ligue 1</p>
         <p>Top Teams: Manchester United | Barcelona | Real Madrid | Juventus | PSG</p>
         <p>Powered by <a href="https://www.api-football.com">api-football.com</a></p>
