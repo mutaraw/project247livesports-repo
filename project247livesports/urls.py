@@ -20,11 +20,11 @@ from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
 
-from soccer.sitemaps import FixtureSitemap
+from soccer.sitemaps import SimpleSitemap
 from soccer.views import robots_txt
 
 sitemaps = {
-    'fixtures': FixtureSitemap,
+    'simple': SimpleSitemap,
 }
 
 urlpatterns = [
