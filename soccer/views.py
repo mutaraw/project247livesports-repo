@@ -1,6 +1,8 @@
 from collections import defaultdict
 
+from django.http import HttpResponse
 from django.shortcuts import render
+from django.template import loader
 
 from soccer.models import Fixture
 
@@ -24,3 +26,8 @@ def index(request):
 
     context = {'grouped_fixtures': grouped_fixtures}
     return render(request, 'soccer/index.html', context)
+
+
+def robots_txt(request):
+    template = loader.get_template('robots.txt')
+    return HttpResponse(template.render(), content_type="text/plain")

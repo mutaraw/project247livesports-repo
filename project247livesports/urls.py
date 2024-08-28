@@ -21,6 +21,7 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
 
 from soccer.sitemaps import FixtureSitemap
+from soccer.views import robots_txt
 
 sitemaps = {
     'fixtures': FixtureSitemap,
@@ -30,6 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('soccer.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', robots_txt),
 ]
 
 if settings.DEBUG:
