@@ -102,7 +102,6 @@ function renderFixtures(fixtures) {
     for (let league in fixtures) {
         for (let date in fixtures[league]) {
             if (fixtures[league][date] && fixtures[league][date].length > 0) {
-                // Convert the date string to local time
                 const localDate = convertToLocalTime(date);
                 const formattedDate = formatLocalDateWithFallback(localDate);
 
@@ -112,9 +111,7 @@ function renderFixtures(fixtures) {
                     continue;
                 }
 
-                // Split formattedDate into datePart and timePart, or just use the whole string if already well-formatted
-                const [datePart, timePart] = formattedDate.includes('@') ? formattedDate.split('@').map(part => part.trim()) : [formattedDate, ''];
-
+                const [datePart, timePart] = formattedDate.split('@').map(part => part.trim());
 
                 html += `<div class="card">
                     <div class="card-head">
@@ -132,7 +129,7 @@ function renderFixtures(fixtures) {
                         </div>
                         <div class="card-head-right">
                             <div class="card-date">${datePart}</div>
-                            ${timePart ? `<div class="card-time">${timePart}</div>` : ''}
+                            <div class="card-time">${timePart}</div>
                         </div>
                     </div>
                     <div class="card-body">`;
@@ -297,10 +294,7 @@ function formatLocalDateWithFallback(date) {
         return 'Invalid Date';
     }
 
-    // Format the date to something like: Sep-07 @ 09:30 (forcing the use of '@')
+    // Format to something like: Sep-06 @ 19:00
     const options = {month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false};
-    const formatted = date.toLocaleString('en-US', options);
-
-    // Manually replace "at" with "@"
-    return formatted.replace(' at ', ' @ ');
+    return date.toLocaleString('en-US', options).replace(',', ' @');
 }

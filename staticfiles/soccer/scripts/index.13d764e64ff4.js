@@ -102,19 +102,10 @@ function renderFixtures(fixtures) {
     for (let league in fixtures) {
         for (let date in fixtures[league]) {
             if (fixtures[league][date] && fixtures[league][date].length > 0) {
-                // Convert the date string to local time
-                const localDate = convertToLocalTime(date);
+                const utcDate = new Date(date + ' UTC');
+                const localDate = convertToLocalTime(utcDate);
                 const formattedDate = formatLocalDateWithFallback(localDate);
-
-                // Skip rendering if the date is invalid
-                if (formattedDate === 'Invalid Date') {
-                    console.error(`Invalid date for league: ${league}, date: ${date}`);
-                    continue;
-                }
-
-                // Split formattedDate into datePart and timePart, or just use the whole string if already well-formatted
-                const [datePart, timePart] = formattedDate.includes('@') ? formattedDate.split('@').map(part => part.trim()) : [formattedDate, ''];
-
+                const [datePart, timePart] = formattedDate.split('@').map(part => part.trim());
 
                 html += `<div class="card">
                     <div class="card-head">
@@ -132,7 +123,7 @@ function renderFixtures(fixtures) {
                         </div>
                         <div class="card-head-right">
                             <div class="card-date">${datePart}</div>
-                            ${timePart ? `<div class="card-time">${timePart}</div>` : ''}
+                            <div class="card-time">${timePart}</div>
                         </div>
                     </div>
                     <div class="card-body">`;
@@ -264,15 +255,15 @@ function convertToLocalTime(dateString) {
         return 'Invalid Date';
     }
 
-    // Clean the date string to remove the milliseconds (if they exist) and ensure the 'T' between date and time
-    let isoFormattedDate = dateString.replace(' ', 'T').split('.')[0];
+    // Add "T" between date and time to make it ISO 8601 compliant
+    let isoFormattedDate = dateString.replace(' ', 'T');
 
-    // Ensure that the time zone is correct by checking if it ends with a time zone or 'Z'
-    if (!isoFormattedDate.endsWith('Z') && !isoFormattedDate.includes('+')) {
-        isoFormattedDate += 'Z'; // Append Z for UTC if no time zone is provided
+    // Append "Z" to denote UTC if it's missing the timezone
+    if (!isoFormattedDate.endsWith('Z')) {
+        isoFormattedDate += 'Z';
     }
 
-    // Parse the ISO formatted date
+    // Parse the ISO 8601 formatted date
     let parsedDate = new Date(isoFormattedDate);
 
     // If still invalid, return 'Invalid Date'
@@ -287,6 +278,7 @@ function convertToLocalTime(dateString) {
 }
 
 
+
 function formatLocalDateWithFallback(date) {
     // Check if the passed date is valid
     if (typeof date === 'string' && date === 'Invalid Date') {
@@ -297,10 +289,7 @@ function formatLocalDateWithFallback(date) {
         return 'Invalid Date';
     }
 
-    // Format the date to something like: Sep-07 @ 09:30 (forcing the use of '@')
+    // Format to something like: Aug-24 @ 11:00
     const options = {month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false};
-    const formatted = date.toLocaleString('en-US', options);
-
-    // Manually replace "at" with "@"
-    return formatted.replace(' at ', ' @ ');
+    return date.toLocaleString('en-US', options).replace(',', ' @');
 }

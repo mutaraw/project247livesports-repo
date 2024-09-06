@@ -112,10 +112,14 @@ function renderFixtures(fixtures) {
                     continue;
                 }
 
-                // Split formattedDate into datePart and timePart, or just use the whole string if already well-formatted
-                const [datePart, timePart] = formattedDate.includes('@') ? formattedDate.split('@').map(part => part.trim()) : [formattedDate, ''];
+                // Split formattedDate into datePart and timePart, but add a check for the timePart
+                const [datePart, timePart] = formattedDate.split('@').map(part => part.trim());
 
-
+                // Ensure both parts are valid before continuing
+                if (!datePart || !timePart) {
+                    console.error(`Invalid formatted date: ${formattedDate}`);
+                    continue;
+                }
                 html += `<div class="card">
                     <div class="card-head">
                         <div class="card-head-left">
@@ -132,7 +136,7 @@ function renderFixtures(fixtures) {
                         </div>
                         <div class="card-head-right">
                             <div class="card-date">${datePart}</div>
-                            ${timePart ? `<div class="card-time">${timePart}</div>` : ''}
+                            <div class="card-time">${timePart}</div>
                         </div>
                     </div>
                     <div class="card-body">`;
@@ -297,10 +301,7 @@ function formatLocalDateWithFallback(date) {
         return 'Invalid Date';
     }
 
-    // Format the date to something like: Sep-07 @ 09:30 (forcing the use of '@')
+    // Format to something like: Sep-06 @ 19:00
     const options = {month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false};
-    const formatted = date.toLocaleString('en-US', options);
-
-    // Manually replace "at" with "@"
-    return formatted.replace(' at ', ' @ ');
+    return date.toLocaleString('en-US', options).replace(',', ' @');
 }

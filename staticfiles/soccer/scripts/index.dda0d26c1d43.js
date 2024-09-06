@@ -112,9 +112,17 @@ function renderFixtures(fixtures) {
                     continue;
                 }
 
-                // Split formattedDate into datePart and timePart, or just use the whole string if already well-formatted
-                const [datePart, timePart] = formattedDate.includes('@') ? formattedDate.split('@').map(part => part.trim()) : [formattedDate, ''];
+                // Check if formattedDate contains '@' for separating date and time
+                let datePart = formattedDate;
+                let timePart = '';
 
+                if (formattedDate.includes('@')) {
+                    // If '@' is found, split into datePart and timePart
+                    [datePart, timePart] = formattedDate.split('@').map(part => part.trim());
+                } else {
+                    // If no '@', fallback to just show the date without a time
+                    console.warn(`Date string does not contain '@': ${formattedDate}`);
+                }
 
                 html += `<div class="card">
                     <div class="card-head">
@@ -298,7 +306,7 @@ function formatLocalDateWithFallback(date) {
     }
 
     // Format the date to something like: Sep-07 @ 09:30 (forcing the use of '@')
-    const options = {month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false};
+    const options = { month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
     const formatted = date.toLocaleString('en-US', options);
 
     // Manually replace "at" with "@"

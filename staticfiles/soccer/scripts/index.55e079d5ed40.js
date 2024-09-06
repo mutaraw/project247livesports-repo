@@ -13,7 +13,6 @@ function reconnectWebSocket() {
 
     socket.onmessage = function (e) {
         const data = JSON.parse(e.data);
-        // console.log('WebSocket data:', data);  // Check the data structure here
         groupedFixtures = data.fixtures;  // Update global variable
         updateUI();
     };
@@ -102,19 +101,10 @@ function renderFixtures(fixtures) {
     for (let league in fixtures) {
         for (let date in fixtures[league]) {
             if (fixtures[league][date] && fixtures[league][date].length > 0) {
-                // Convert the date string to local time
-                const localDate = convertToLocalTime(date);
+                const utcDate = new Date(date + ' UTC');
+                const localDate = convertToLocalTime(utcDate);
                 const formattedDate = formatLocalDateWithFallback(localDate);
-
-                // Skip rendering if the date is invalid
-                if (formattedDate === 'Invalid Date') {
-                    console.error(`Invalid date for league: ${league}, date: ${date}`);
-                    continue;
-                }
-
-                // Split formattedDate into datePart and timePart, or just use the whole string if already well-formatted
-                const [datePart, timePart] = formattedDate.includes('@') ? formattedDate.split('@').map(part => part.trim()) : [formattedDate, ''];
-
+                const [datePart, timePart] = formattedDate.split('@').map(part => part.trim());
 
                 html += `<div class="card">
                     <div class="card-head">
@@ -132,7 +122,7 @@ function renderFixtures(fixtures) {
                         </div>
                         <div class="card-head-right">
                             <div class="card-date">${datePart}</div>
-                            ${timePart ? `<div class="card-time">${timePart}</div>` : ''}
+                            <div class="card-time">${timePart}</div>
                         </div>
                     </div>
                     <div class="card-body">`;
@@ -259,21 +249,26 @@ function renderFavorites(favorites, groupedFixtures) {
 }
 
 function convertToLocalTime(dateString) {
-    // Check if dateString is a string
+    // Check if dateString is already a Date object
+    if (dateString instanceof Date) {
+        return new Date(dateString.toLocaleString('en-US', {
+            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+        }));
+    }
+
+    // If dateString is not a string, return Invalid Date
     if (typeof dateString !== 'string') {
         return 'Invalid Date';
     }
 
-    // Clean the date string to remove the milliseconds (if they exist) and ensure the 'T' between date and time
-    let isoFormattedDate = dateString.replace(' ', 'T').split('.')[0];
+    // Try parsing the date string
+    let parsedDate = new Date(dateString);
 
-    // Ensure that the time zone is correct by checking if it ends with a time zone or 'Z'
-    if (!isoFormattedDate.endsWith('Z') && !isoFormattedDate.includes('+')) {
-        isoFormattedDate += 'Z'; // Append Z for UTC if no time zone is provided
+    // If the initial parsing fails, try to fix the string format
+    if (isNaN(parsedDate.getTime())) {
+        // Use string manipulations if it's still a string
+        parsedDate = new Date(dateString.replace(' ', 'T').replace('+00:00', 'Z'));
     }
-
-    // Parse the ISO formatted date
-    let parsedDate = new Date(isoFormattedDate);
 
     // If still invalid, return 'Invalid Date'
     if (isNaN(parsedDate.getTime())) {
@@ -288,19 +283,14 @@ function convertToLocalTime(dateString) {
 
 
 function formatLocalDateWithFallback(date) {
-    // Check if the passed date is valid
-    if (typeof date === 'string' && date === 'Invalid Date') {
+    // Check if the date is valid
+    if (isNaN(date.getTime())) {
         return 'Invalid Date';
     }
 
-    if (!(date instanceof Date) || isNaN(date.getTime())) {
-        return 'Invalid Date';
-    }
-
-    // Format the date to something like: Sep-07 @ 09:30 (forcing the use of '@')
+    // Format to something like: Aug-24 @ 11:00
     const options = {month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false};
-    const formatted = date.toLocaleString('en-US', options);
-
-    // Manually replace "at" with "@"
-    return formatted.replace(' at ', ' @ ');
+    return date.toLocaleString('en-US', options).replace(',', ' @');
 }
+
+console.log(typeof dateString, dateString);
