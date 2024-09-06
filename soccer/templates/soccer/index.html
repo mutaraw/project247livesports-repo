@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>247livesports.com | Live, Finished, Upcoming Soccer Scores & Fixtures - Real-Time Updates</title>
+    <title>Live, Finished, Upcoming Soccer Scores & Results</title>
 
     <!-- Meta Tags for SEO -->
     <meta name="description"
-          content="247 Live Sports: Watch live, finished, upcoming, and scheduled soccer matches with real-time updates. Follow top leagues like Premier League, La Liga, Serie A, and more on 247livesports.com. Fast updates, minimal ads, and global coverage.">
+          content="247livesports.com offers soccer scores, results and fixtures with real-time updates happening across the world from over 1000 soccer or football leagues. We've got you covered with soccer matches that live, finished and upcoming from the past 24 hours or next 24 hours. We bring you up to speed with the latest scores and events from the world of soccer or football and beyond. Follow top or your favorite leagues like Premier League, La Liga, Serie A, and more on 247livesports.com. Fast updates, minimal ads, and global coverage. Matches are happening live 24 hours of the day. latest soccer results MLS, Liga MX, EPL, LaLiga, Serie A, Bundesliga, UEFA Champions League and more. Find all today's/tonight's soccer scores on 247livesports.com.">
     <meta name="keywords"
-          content="live soccer, finished matches, upcoming fixtures, scheduled games, real-time updates, happening now, current scores, Premier League, La Liga, Serie A, Bundesliga, Ligue 1, football scores, minimal ads, global football">
+          content="live soccer, finished soccer matches, upcoming soccer fixtures, scheduled soccer games, real-time updates, happening now, current scores, Premier League, La Liga, Serie A, Bundesliga, Ligue 1, football scores, football results, soccer scores, soccer results, soccer results past 24 hours, soccer scores past 24 hours, upcoming soccer matches next 24 hours, minimal ads, global football">
     <meta name="author" content="247 Live Sports">
     <meta name="robots" content="index,follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,11 +36,16 @@
     <link rel="icon" href="{% static 'soccer/images/icon.webp' %}" type="image/webp">
 
     <!-- CSS Stylesheets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'soccer/styles/index.css' %}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Canonical Link -->
     <link rel="canonical" href="https://www.247livesports.com/">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9915706451141212"
+            crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -51,7 +56,7 @@
 <main>
     <section class="tabs-container">
         <button class="tab" id="tab-live" onclick="showTab('live')">Live</button>
-        <button class="tab" id="tab-scheduled" onclick="showTab('scheduled')">Scheduled</button>
+        <button class="tab" id="tab-scheduled" onclick="showTab('scheduled')">Upcoming</button>
         <button class="tab" id="tab-finished" onclick="showTab('finished')">Finished</button>
         <button class="tab" id="tab-notplayed" onclick="showTab('notplayed')">Not Played</button>
     </section>
@@ -72,13 +77,20 @@
         <p style="text-align: center; font-size: 16px;"><i class="fa-solid fa-spinner" style="color: tomato;"></i>
             Loading not played fixtures...</p>
     </section>
+    <div class="message">
+        <p><span class="fa-solid fa-circle-exclamation"></span> All tabs will <em
+                style="color: red; margin-right: 2px;">show</em> matches
+            from the <em style="color: red; margin-right: 2px;">past </em> 24 hours or the <em
+                    style="color: red; margin-right: 2px;">next </em> 24 hours.</p>
+        <p>Data is updated every 5seconds.</p>
+    </div>
 </main>
 <footer>
     <div class="footer-content">
         <p>&copy; 2024 247livesports.com All Rights Reserved.</p>
         <p>Top Leagues: Premier League | La Liga | Serie A | Bundesliga | Ligue 1</p>
-        <p>Top Teams: Manchester United | Barcelona | Real Madrid | Juventus | PSG</p>
-        <p>Powered by <a href="https://www.api-football.com">api-football.com</a></p>
+        <p>Top Teams: Manchester City | Barcelona | Real Madrid | Juventus | PSG</p>
+        <p>Powered by <a href="https://www.api-football.com" target="_blank">api-football.com</a></p>
     </div>
 </footer>
 <script src="{% static 'soccer/scripts/index.js' %}"></script>

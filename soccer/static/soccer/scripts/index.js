@@ -109,17 +109,15 @@ function renderFixtures(fixtures) {
                 html += `<div class="card">
                     <div class="card-head">
                         <div class="card-head-left">
-                            <div class="country-info">
-                                ${fixtures[league][date][0].league_country_flag ?
-                    `<img src="${fixtures[league][date][0].league_country_flag}" alt="${fixtures[league][date][0].league_country}" loading="lazy"/>` : ''}
-                                ${fixtures[league][date][0].league_country ?
-                    `<div>${fixtures[league][date][0].league_country}</div>` : ''}
-                            </div>
                             <div class="league-info">
                                 ${fixtures[league][date][0].league_logo ?
                     `<img src="${fixtures[league][date][0].league_logo}" alt="${fixtures[league][date][0].league_name}" loading="lazy"/>` : ''}
                                 ${fixtures[league][date][0].league_name ?
-                    `<div>${fixtures[league][date][0].league_name}</div>` : ''}
+                    `<div>${fixtures[league][date][0].league_name} - </div>` : ''}
+                            </div>
+                            <div class="country-info">
+                                ${fixtures[league][date][0].league_country ?
+                    `<div>${fixtures[league][date][0].league_country}</div>` : ''}
                             </div>
                         </div>
                         <div class="card-head-right">
@@ -136,37 +134,31 @@ function renderFixtures(fixtures) {
                             ${fixture.home_team_logo ?
                         `<img src="${fixture.home_team_logo}" alt="${fixture.home_team_name}" loading="lazy">` : ''}
                             ${fixture.home_team_name ?
-                        `<div class="home-team-name">${fixture.home_team_name}</div>` : ''}
-                        </div>
-                        <div class="home-goals">
-                            ${fixture.home_goals !== null ? `<div>${fixture.home_goals}</div>` : ''}
-                        </div>
-                        <div class="away-goals">
-                            ${fixture.away_goals !== null ? `<div>${fixture.away_goals}</div>` : ''}
+                        `<div class="home-team-name">${fixture.home_team_name} ${fixture.home_goals !== null ? `<span class="goals">(${fixture.home_goals})</span>` : ''}</div>` : ''}
                         </div>
                         <div class="home-team-winner">
                             ${fixture.home_team_winner === true ?
-                        `<i class="fa-solid fa-arrow-up"></i>` :
+                        `<div class="win">W</div>` :
                         fixture.home_team_winner === false ?
-                            `<i class="fa-solid fa-arrow-down"></i>` :
-                            `<i class="fa-solid fa-arrows-up-down"></i>`}
+                            `<div class="lose">L</div>` :
+                            `<div class="draw">D</div>`}
                         </div>
                         <div class="away-team-winner">
                             ${fixture.away_team_winner === true ?
-                        `<i class="fa-solid fa-arrow-up"></i>` :
+                        `<div class="win">W</div>` :
                         fixture.away_team_winner === false ?
-                            `<i class="fa-solid fa-arrow-down"></i>` :
-                            `<i class="fa-solid fa-arrows-up-down"></i>`}
+                            `<div class="lose">L</div>` :
+                            `<div class="draw">D</div>`}
                         </div>
                         <div class="away-team">
                             ${fixture.away_team_logo ?
                         `<img src="${fixture.away_team_logo}" alt="${fixture.away_team_name}" loading="lazy">` : ''}
                             ${fixture.away_team_name ?
-                        `<div class="away-team-name">${fixture.away_team_name}</div>` : ''}
+                        `<div class="away-team-name">${fixture.away_team_name} ${fixture.away_goals !== null ? `<span class="goals">(${fixture.away_goals})</span>` : ''}</div>` : ''}
                         </div>
                         <div class="statuses">
                             <div class="status-short">
-                                ${fixture.status_long ? `<div>${fixture.status_long}</div>` : ''}
+                                ${fixture.status_short ? `<div>${fixture.status_short}</div>` : ''}
                             </div>
                             <div class="status-elapsed">
                                 ${fixture.status_elapsed ? `<div>${fixture.status_elapsed}<span>'</span></div>` : ''}
@@ -175,12 +167,10 @@ function renderFixtures(fixtures) {
                         <div class="match-fav">
                             <i class="fa-solid fa-star ${isFavorite ? 'favorite' : ''}" onclick="toggleFavorite(${fixture.fixture_id})"></i>
                         </div>
-                        <div class="match-goals">
                             ${fixture.halftime_home !== null ? `<div class="ht">HT: ${fixture.halftime_home} - ${fixture.halftime_away}</div>` : ''}
                             ${fixture.fulltime_home !== null ? `<div class="ft">FT: ${fixture.fulltime_home} - ${fixture.fulltime_away}</div>` : ''}
                             ${fixture.extratime_home !== null ? `<div class="et">${fixture.extratime_home} - ${fixture.extratime_away}</div>` : ''}
                             ${fixture.penalty_home !== null ? `<div class="pen">${fixture.penalty_home} - ${fixture.penalty_away}</div>` : ''}
-                        </div>
                     </div>`;
                 });
 
@@ -193,7 +183,7 @@ function renderFixtures(fixtures) {
 
 
 function renderFavorites(favorites, groupedFixtures) {
-    let html = '<div style="padding: 10px; background: orangered; border-radius: 5px; color: #ffffff; font-size: 16px; font-weight:bold;"><i class="fa-solid fa-star" style="font-weight: bold; font-size: 18px;"></i> Favorite Live Matches</div>';
+    let html = '<div class="favorite-header"><i class="fa-solid fa-star" style="font-weight: bold; font-size: 18px;"></i> Favorite Live Matches</div>';
     let foundFavorites = false;
 
     for (let league in groupedFixtures.live) {
@@ -207,37 +197,31 @@ function renderFavorites(favorites, groupedFixtures) {
                                 ${fixture.home_team_logo ?
                         `<img src="${fixture.home_team_logo}" alt="${fixture.home_team_name}" loading="lazy">` : ''}
                                 ${fixture.home_team_name ?
-                        `<div class="home-team-name">${fixture.home_team_name}</div>` : ''}
-                            </div>
-                            <div class="home-goals">
-                                ${fixture.home_goals !== null ? `<div>${fixture.home_goals}</div>` : ''}
-                            </div>
-                            <div class="away-goals">
-                                ${fixture.away_goals !== null ? `<div>${fixture.away_goals}</div>` : ''}
+                        `<div class="home-team-name">${fixture.home_team_name} ${fixture.home_goals !== null ? `<span class="goals">(${fixture.home_goals})</span>` : ''}</div>` : ''}
                             </div>
                             <div class="home-team-winner">
                                 ${fixture.home_team_winner === true ?
-                        `<i class="fa-solid fa-arrow-up"></i>` :
+                        `<div class="win">W</div>` :
                         fixture.home_team_winner === false ?
-                            `<i class="fa-solid fa-arrow-down"></i>` :
-                            `<i class="fa-solid fa-arrows-up-down"></i>`}
+                            `<div class="lose">L</div>` :
+                            `<div class="draw">D</div>`}
                             </div>
                             <div class="away-team-winner">
                                 ${fixture.away_team_winner === true ?
-                        `<i class="fa-solid fa-arrow-up"></i>` :
+                        `<div class="win">W</div>` :
                         fixture.away_team_winner === false ?
-                            `<i class="fa-solid fa-arrow-down"></i>` :
-                            `<i class="fa-solid fa-arrows-up-down"></i>`}
+                            `<div class="lose">L</div>` :
+                            `<div class="draw">D</div>`}
                             </div>
                             <div class="away-team">
                                 ${fixture.away_team_logo ?
                         `<img src="${fixture.away_team_logo}" alt="${fixture.away_team_name}" loading="lazy">` : ''}
                                 ${fixture.away_team_name ?
-                        `<div class="away-team-name">${fixture.away_team_name}</div>` : ''}
+                        `<div class="away-team-name">${fixture.away_team_name} ${fixture.away_goals !== null ? `<span class="goals">(${fixture.away_goals})</span>` : ''}</div>` : ''}
                             </div>
                             <div class="statuses">
                                 <div class="status-short">
-                                    ${fixture.status_long ? `<div>${fixture.status_long}</div>` : ''}
+                                    ${fixture.status_short ? `<div>${fixture.status_short}</div>` : ''}
                                 </div>
                                 <div class="status-elapsed">
                                     ${fixture.status_elapsed ? `<div>${fixture.status_elapsed}<span>'</span></div>` : ''}
@@ -246,12 +230,10 @@ function renderFavorites(favorites, groupedFixtures) {
                             <div class="match-fav">
                                 <i class="fa-solid fa-star favorite" onclick="toggleFavorite(${fixture.fixture_id})"></i>
                             </div>
-                            <div class="match-goals">
                                 ${fixture.halftime_home !== null ? `<div class="ht">HT: ${fixture.halftime_home} - ${fixture.halftime_away}</div>` : ''}
                                 ${fixture.fulltime_home !== null ? `<div class="ft">FT: ${fixture.fulltime_home} - ${fixture.fulltime_away}</div>` : ''}
                                 ${fixture.extratime_home !== null ? `<div class="et">${fixture.extratime_home} - ${fixture.extratime_away}</div>` : ''}
                                 ${fixture.penalty_home !== null ? `<div class="pen">${fixture.penalty_home} - ${fixture.penalty_away}</div>` : ''}
-                            </div>
                         </div>
                     </div>`;
                 }
@@ -260,7 +242,7 @@ function renderFavorites(favorites, groupedFixtures) {
     }
 
     if (!foundFavorites) {
-        html += '<p style="text-align: center;">Click the star icon to follow a live match.</p>';
+        html += '<p style="text-align: center; padding-bottom: 4px;">Click the star icon to follow a live match.</p>';
     }
 
     return html;

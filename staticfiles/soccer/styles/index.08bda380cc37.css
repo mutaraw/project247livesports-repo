@@ -27,10 +27,8 @@ header {
 }
 
 .site-name {
+    color: #ffffff;
     font-size: 2em;
-    color: darkorange;
-    padding-top: 8px;
-    padding-bottom: 8px;
 }
 
 .site-logo {
@@ -103,7 +101,7 @@ main {
 
 .favorite-header {
     background: #1b1b1b;
-    padding: 8px;
+    padding: 16px;
     color: darkorange;
     font-weight: bold;
 }

@@ -134,14 +134,14 @@ function renderFixtures(fixtures) {
                             ${fixture.home_team_logo ?
                         `<img src="${fixture.home_team_logo}" alt="${fixture.home_team_name}" loading="lazy">` : ''}
                             ${fixture.home_team_name ?
-                        `<div class="home-team-name">${fixture.home_team_name} ${fixture.home_goals !== null ? `<span class="goals">(${fixture.home_goals})</span>` : ''}</div>` : ''}
+                        `<div class="home-team-name">${fixture.home_team_name} (${fixture.home_goals !== null ? `<span class="goals">${fixture.home_goals}</span>` : ''})</div>` : ''}
                         </div>
                         <div class="home-team-winner">
                             ${fixture.home_team_winner === true ?
-                        `<div class="win">W</div>` :
+                        `<div class="win"></div>` :
                         fixture.home_team_winner === false ?
-                            `<div class="lose">L</div>` :
-                            `<div class="draw">D</div>`}
+                            `<div class="lose"></div>` :
+                            `<div class="draw"></div>`}
                         </div>
                         <div class="away-team-winner">
                             ${fixture.away_team_winner === true ?
@@ -154,7 +154,7 @@ function renderFixtures(fixtures) {
                             ${fixture.away_team_logo ?
                         `<img src="${fixture.away_team_logo}" alt="${fixture.away_team_name}" loading="lazy">` : ''}
                             ${fixture.away_team_name ?
-                        `<div class="away-team-name">${fixture.away_team_name} ${fixture.away_goals !== null ? `<span class="goals">(${fixture.away_goals})</span>` : ''}</div>` : ''}
+                        `<div class="away-team-name">${fixture.away_team_name} (${fixture.away_goals !== null ? `<span class="goals">${fixture.away_goals}</span>` : ''})</div>` : ''}
                         </div>
                         <div class="statuses">
                             <div class="status-short">
@@ -197,14 +197,14 @@ function renderFavorites(favorites, groupedFixtures) {
                                 ${fixture.home_team_logo ?
                         `<img src="${fixture.home_team_logo}" alt="${fixture.home_team_name}" loading="lazy">` : ''}
                                 ${fixture.home_team_name ?
-                        `<div class="home-team-name">${fixture.home_team_name} ${fixture.home_goals !== null ? `<span class="goals">(${fixture.home_goals})</span>` : ''}</div>` : ''}
+                        `<div class="home-team-name">${fixture.home_team_name} (${fixture.home_goals !== null ? `<span class="goals">${fixture.home_goals}</span>` : ''})</div>` : ''}
                             </div>
                             <div class="home-team-winner">
                                 ${fixture.home_team_winner === true ?
-                        `<div class="win">W</div>` :
+                        `<div class="win"></div>` :
                         fixture.home_team_winner === false ?
-                            `<div class="lose">L</div>` :
-                            `<div class="draw">D</div>`}
+                            `<div class="lose"></div>` :
+                            `<div class="draw"></div>`}
                             </div>
                             <div class="away-team-winner">
                                 ${fixture.away_team_winner === true ?
@@ -217,7 +217,7 @@ function renderFavorites(favorites, groupedFixtures) {
                                 ${fixture.away_team_logo ?
                         `<img src="${fixture.away_team_logo}" alt="${fixture.away_team_name}" loading="lazy">` : ''}
                                 ${fixture.away_team_name ?
-                        `<div class="away-team-name">${fixture.away_team_name} ${fixture.away_goals !== null ? `<span class="goals">(${fixture.away_goals})</span>` : ''}</div>` : ''}
+                        `<div class="away-team-name">${fixture.away_team_name} (${fixture.away_goals !== null ? `<span class="goals">${fixture.away_goals}</span>` : ''})</div>` : ''}
                             </div>
                             <div class="statuses">
                                 <div class="status-short">
@@ -242,7 +242,7 @@ function renderFavorites(favorites, groupedFixtures) {
     }
 
     if (!foundFavorites) {
-        html += '<p style="text-align: center; padding-bottom: 4px;">Click the star icon to follow a live match.</p>';
+        html += '<p style="text-align: center;">Click the star icon to follow a live match.</p>';
     }
 
     return html;

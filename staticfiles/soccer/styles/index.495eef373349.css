@@ -8,7 +8,6 @@ body {
     font-family: "Oswald", -apple-system, Roboto, Arial, sans-serif;
     background: #ffffff;
     font-optical-sizing: auto;
-    font-size: 15px;
     font-weight: 350;
     font-style: normal;
     display: grid;
@@ -27,10 +26,8 @@ header {
 }
 
 .site-name {
+    color: #dddddd;
     font-size: 2em;
-    color: darkorange;
-    padding-top: 8px;
-    padding-bottom: 8px;
 }
 
 .site-logo {
@@ -43,24 +40,10 @@ main {
     display: grid;
     grid-template-areas:
             'tabs-container'
-            'message'
             'favorites'
             'fixtures';
     grid-template-columns: 1fr;
-    grid-template-rows: auto 50px auto 1fr;
-}
-
-.message {
-    grid-area: message;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-
-.fa-circle-exclamation {
-    color: red;
+    grid-template-rows: auto auto 1fr;
 }
 
 .tabs-container {
@@ -74,54 +57,43 @@ main {
 }
 
 .tab {
-    font-size: 15px;
     padding: 8px;
     border-radius: 4px;
-    background: #ffffff;
+    background: #dddddd;
     cursor: pointer;
     border: none;
     font-family: "Oswald", -apple-system, Roboto, Arial, sans-serif;
-    font-weight: 380;
-    font-style: normal;
-    font-optical-sizing: auto;
 }
 
 .tab.active {
-    background: red;
+    background: orangered;
 }
 
 .tab:hover {
-    background: #1b1b1b;
-    color: orangered;
+    background: coral;
 }
 
 #favorites-container {
     grid-area: favorites;
     display: grid;
     grid-template-columns: 1fr;
+    gap: 5px;
+    margin-bottom: 10px;
+    border-top: 1px solid #1b1b1b;
+    padding-bottom: 8px;
 }
 
 .favorite-header {
     background: #1b1b1b;
-    padding: 8px;
-    color: darkorange;
+    padding: 16px;
+    color: orangered;
     font-weight: bold;
 }
 
 #favorites-container .card {
     padding-bottom: 0;
     margin-bottom: 0;
-}
-
-#favorites-container .fixture {
-    padding: 0;
-    border-bottom: 1px solid #1b1b1b;
-    margin-bottom: 0;
-}
-
-#favorites-container .card-body {
-    border: 1px solid #1b1b1b;
-    margin-bottom: 0;
+    gap: 5px;
 }
 
 #favorites-container .fa-star {
@@ -132,6 +104,7 @@ main {
     grid-area: fixtures;
     display: grid;
     grid-template-columns: 1fr;
+    gap: 5px;
 }
 
 .card {
@@ -145,11 +118,10 @@ main {
     grid-area: card-head;
     display: grid;
     grid-template-areas: 'card-head-left card-head-right';
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr auto;
     background: #1b1b1b;
     color: #dddddd;
-    padding: 8px;
-    gap: 4px;
+    padding: 16px;
 }
 
 .favorite {
@@ -161,7 +133,6 @@ main {
     display: flex;
     align-items: center;
     justify-content: left;
-    flex-wrap: wrap;
     gap: 5px;
 }
 
@@ -173,9 +144,6 @@ main {
 }
 
 .country-info {
-    display: flex;
-    align-items: center;
-    justify-content: left;
     color: darkorange;
     font-style: italic;
 }
@@ -191,7 +159,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: right;
-    gap: 4px;
+    gap: 5px;
 }
 
 .card-body {
@@ -219,11 +187,7 @@ main {
     margin: 4px;
     background: maroon;
     border-radius: 4px;
-    width: 60px;
-}
-
-.card-time {
-    color: darkorange;
+    width: 80px;
 }
 
 .ht {
@@ -257,7 +221,7 @@ main {
     gap: 5px;
     align-items: center;
     justify-content: left;
-    padding: 4px;
+    padding: 5px;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
@@ -276,9 +240,9 @@ main {
     }
 }
 
-#favorites-container .status-elapsed,
-#live .status-elapsed {
-    animation: blink 1.5s infinite;
+#favorites-container .status-elapsed span,
+#live .status-elapsed span {
+    animation: blink 1s infinite;
     color: red;
 }
 
@@ -287,20 +251,35 @@ main {
     font-style: italic;
 }
 
-.at-symbol {
-    color: darkorange;
-}
-
 .statuses {
     grid-area: statuses;
+    display: grid;
+    grid-template-areas:
+                    'status-elapsed'
+                    'status-short';
+    grid-template-rows: auto auto;
+    gap: 5px;
+    border-left: 1px solid #1b1b1b;
+    color: green;
+}
+
+.status-short {
+    grid-area: status-short;
     display: flex;
-    gap: 8px;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     padding: 4px;
-    border-left: 1px solid #1b1b1b;
-    color: green;
+}
+
+.status-elapsed {
+    grid-area: status-elapsed;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
 }
 
 .home-team-winner {
@@ -323,7 +302,6 @@ main {
 
 .win {
     color: green;
-    font-weight: bold;
 }
 
 .lose {
@@ -332,6 +310,10 @@ main {
 
 .draw {
     color: orange;
+}
+
+.fixture:last-child {
+    border-bottom: none;
 }
 
 .home-team img,
@@ -351,11 +333,23 @@ main {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
-    border-left: 1px solid #1b1b1b;
+    border-left: 1px solid #aaa;
 }
 
 .fa-star {
     cursor: pointer;
+}
+
+.match-goals {
+    grid-area: match-goals;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid #111111;
+    border-radius: 3px;
+    padding-top: 5px;
+    background: #111111;
 }
 
 .ht {
@@ -393,6 +387,4 @@ footer {
     align-items: center;
     padding: 5px;
     text-align: center;
-    background: #1b1b1b;
-    color: #ffffff;
 }

@@ -64,7 +64,7 @@ class FixtureConsumer(AsyncWebsocketConsumer):
                 'away_goals': fixture.away_goals,
                 'home_team_winner': fixture.home_team_winner,
                 'away_team_winner': fixture.away_team_winner,
-                'status_long': fixture.status_long,
+                'status_short': fixture.status_short,
                 'status_elapsed': fixture.status_elapsed,
                 'halftime_home': fixture.halftime_home,
                 'fulltime_home': fixture.fulltime_home,

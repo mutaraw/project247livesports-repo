@@ -27,10 +27,8 @@ header {
 }
 
 .site-name {
+    color: #dddddd;
     font-size: 2em;
-    color: darkorange;
-    padding-top: 8px;
-    padding-bottom: 8px;
 }
 
 .site-logo {
@@ -43,24 +41,10 @@ main {
     display: grid;
     grid-template-areas:
             'tabs-container'
-            'message'
             'favorites'
             'fixtures';
     grid-template-columns: 1fr;
-    grid-template-rows: auto 50px auto 1fr;
-}
-
-.message {
-    grid-area: message;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-
-.fa-circle-exclamation {
-    color: red;
+    grid-template-rows: auto auto 1fr;
 }
 
 .tabs-container {
@@ -74,37 +58,33 @@ main {
 }
 
 .tab {
-    font-size: 15px;
     padding: 8px;
     border-radius: 4px;
-    background: #ffffff;
+    background: #dddddd;
     cursor: pointer;
     border: none;
     font-family: "Oswald", -apple-system, Roboto, Arial, sans-serif;
-    font-weight: 380;
-    font-style: normal;
-    font-optical-sizing: auto;
 }
 
 .tab.active {
-    background: red;
+    background: orangered;
 }
 
 .tab:hover {
-    background: #1b1b1b;
-    color: orangered;
+    background: coral;
 }
 
 #favorites-container {
     grid-area: favorites;
     display: grid;
     grid-template-columns: 1fr;
+    gap: 5px;
 }
 
 .favorite-header {
     background: #1b1b1b;
-    padding: 8px;
-    color: darkorange;
+    padding: 16px;
+    color: orangered;
     font-weight: bold;
 }
 
@@ -115,12 +95,12 @@ main {
 
 #favorites-container .fixture {
     padding: 0;
-    border-bottom: 1px solid #1b1b1b;
+    border: 1px solid #1b1b1b;
     margin-bottom: 0;
 }
 
 #favorites-container .card-body {
-    border: 1px solid #1b1b1b;
+    border-bottom: 1px solid #1b1b1b;
     margin-bottom: 0;
 }
 
@@ -334,6 +314,10 @@ main {
     color: orange;
 }
 
+.fixture:last-child {
+    border-bottom: none;
+}
+
 .home-team img,
 .away-team img {
     width: 20px;
@@ -394,5 +378,5 @@ footer {
     padding: 5px;
     text-align: center;
     background: #1b1b1b;
-    color: #ffffff;
+    color: #dddddd;
 }

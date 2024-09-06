@@ -8,12 +8,12 @@ body {
     font-family: "Oswald", -apple-system, Roboto, Arial, sans-serif;
     background: #ffffff;
     font-optical-sizing: auto;
-    font-size: 15px;
     font-weight: 350;
     font-style: normal;
     display: grid;
     grid-template-areas: 'header' 'main' 'footer';
     grid-template-rows: auto 1fr auto;
+    color: #ddd;
     min-height: 100vh;
 }
 
@@ -27,10 +27,8 @@ header {
 }
 
 .site-name {
+    color: #dddddd;
     font-size: 2em;
-    color: darkorange;
-    padding-top: 8px;
-    padding-bottom: 8px;
 }
 
 .site-logo {
@@ -43,24 +41,10 @@ main {
     display: grid;
     grid-template-areas:
             'tabs-container'
-            'message'
             'favorites'
             'fixtures';
     grid-template-columns: 1fr;
-    grid-template-rows: auto 50px auto 1fr;
-}
-
-.message {
-    grid-area: message;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-
-.fa-circle-exclamation {
-    color: red;
+    grid-template-rows: auto auto 1fr;
 }
 
 .tabs-container {
@@ -68,60 +52,40 @@ main {
     display: flex;
     align-items: center;
     justify-content: left;
-    padding: 8px;
+    padding: 10px;
     gap: 5px;
     background: #333333;
 }
 
 .tab {
-    font-size: 15px;
     padding: 8px;
     border-radius: 4px;
-    background: #ffffff;
+    background: #dddddd;
     cursor: pointer;
     border: none;
     font-family: "Oswald", -apple-system, Roboto, Arial, sans-serif;
-    font-weight: 380;
-    font-style: normal;
-    font-optical-sizing: auto;
 }
 
 .tab.active {
-    background: red;
+    background: orangered;
 }
 
 .tab:hover {
-    background: #1b1b1b;
-    color: orangered;
+    background: coral;
 }
 
 #favorites-container {
     grid-area: favorites;
     display: grid;
     grid-template-columns: 1fr;
-}
-
-.favorite-header {
-    background: #1b1b1b;
-    padding: 8px;
-    color: darkorange;
-    font-weight: bold;
+    gap: 5px;
+    padding: 5px;
 }
 
 #favorites-container .card {
     padding-bottom: 0;
     margin-bottom: 0;
-}
-
-#favorites-container .fixture {
-    padding: 0;
-    border-bottom: 1px solid #1b1b1b;
-    margin-bottom: 0;
-}
-
-#favorites-container .card-body {
-    border: 1px solid #1b1b1b;
-    margin-bottom: 0;
+    gap: 5px;
 }
 
 #favorites-container .fa-star {
@@ -132,24 +96,29 @@ main {
     grid-area: fixtures;
     display: grid;
     grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 5px;
 }
 
 .card {
     display: grid;
     grid-template-areas: 'card-head' 'card-body';
     grid-template-rows: auto auto;
-    background: #ffffff;
+    gap: 10px;
+    border-radius: 5px;
+    padding: 5px;
+    background: #333;
+    margin-bottom: 10px;
 }
 
 .card-head {
     grid-area: card-head;
     display: grid;
     grid-template-areas: 'card-head-left card-head-right';
-    grid-template-columns: auto auto;
-    background: #1b1b1b;
-    color: #dddddd;
-    padding: 8px;
-    gap: 4px;
+    grid-template-columns: 1fr auto;
+    border-radius: 5px;
+    background: #dddddd;
+    color: #111111;
 }
 
 .favorite {
@@ -158,88 +127,76 @@ main {
 
 .card-head-left {
     grid-area: card-head-left;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    flex-wrap: wrap;
+    padding: 5px;
+    display: grid;
+    grid-template-rows: auto auto;
     gap: 5px;
 }
 
+.country-info,
 .league-info {
     display: flex;
     align-items: center;
     justify-content: left;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
     gap: 5px;
 }
 
-.country-info {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    color: darkorange;
-    font-style: italic;
+.league-info {
+    font-size: 12px;
 }
 
 .card-head-left img {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
 }
 
 .card-head-right {
     grid-area: card-head-right;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    background: orangered;
     color: #ffffff;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 5px;
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 5px;
+}
+
+.card-date, .card-time {
     display: flex;
     align-items: center;
     justify-content: right;
-    gap: 4px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    gap: 5px;
 }
 
 .card-body {
     display: grid;
     grid-template-columns: 1fr;
+    gap: 5px;
 }
 
 .fixture {
     display: grid;
     grid-template-areas:
-                    'home-team-winner home-team et ht statuses match-fav'
-                    'away-team-winner away-team pen ft statuses match-fav';
-    grid-template-columns: 28px 1fr auto auto 28px auto;
-    grid-template-rows: auto auto;
-    background: #ffffff;
-    border-bottom: 1px solid #1b1b1b;
-}
-
-.ht, .et, .ft, .pen {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 4px;
-    margin: 4px;
-    background: maroon;
-    border-radius: 4px;
-    width: 60px;
-}
-
-.card-time {
-    color: darkorange;
-}
-
-.ht {
-    grid-area: ht;
-}
-
-.ft {
-    grid-area: ft;
-}
-
-.et {
-    grid-area: et;
-}
-
-.pen {
-    grid-area: pen;
+                    'statuses home-team home-team-winner home-goals match-fav'
+                    'statuses away-team away-team-winner away-goals match-fav'
+                    'match-goals match-goals match-goals match-goals match-goals';
+    grid-template-columns: auto 1fr auto auto auto;
+    grid-template-rows: auto auto auto;
+    gap: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    background: #181818;
 }
 
 .home-team {
@@ -248,7 +205,10 @@ main {
     gap: 5px;
     align-items: center;
     justify-content: left;
-    padding: 4px;
+    padding: 5px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
 }
 
 .away-team {
@@ -257,7 +217,31 @@ main {
     gap: 5px;
     align-items: center;
     justify-content: left;
-    padding: 4px;
+    padding: 5px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+}
+
+.home-goals {
+    grid-area: home-goals;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+}
+
+.away-goals {
+    grid-area: away-goals;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
@@ -276,62 +260,113 @@ main {
     }
 }
 
-#favorites-container .status-elapsed,
-#live .status-elapsed {
-    animation: blink 1.5s infinite;
-    color: red;
-}
-
-.goals {
-    color: orangered;
-    font-style: italic;
-}
-
-.at-symbol {
-    color: darkorange;
+#favorites-container .status-elapsed span,
+#live .status-elapsed span {
+    animation: blink 1s infinite;
+    font-size: 18px;
 }
 
 .statuses {
     grid-area: statuses;
+    display: grid;
+    grid-template-areas:
+                    'status-elapsed'
+                    'status-short';
+    grid-template-rows: auto auto;
+    gap: 5px;
+    border-right: 1px solid #aaa;
+}
+
+.status-short {
+    grid-area: status-short;
     display: flex;
-    gap: 8px;
-    flex-direction: column;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    justify-content: left;
+    padding: 5px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    color: orangered;
+}
+
+.status-elapsed {
+    grid-area: status-elapsed;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
     align-items: center;
     justify-content: center;
-    padding: 4px;
-    border-left: 1px solid #1b1b1b;
-    color: green;
+    padding: 5px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    color: orangered;
 }
 
 .home-team-winner {
     grid-area: home-team-winner;
     display: flex;
+    flex-direction: column;
+    gap: 5px;
     align-items: center;
     justify-content: center;
-    padding: 4px;
-    border-right: 1px solid #1b1b1b;
+    padding: 5px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
 }
 
 .away-team-winner {
     grid-area: away-team-winner;
     display: flex;
+    flex-direction: column;
+    gap: 5px;
     align-items: center;
     justify-content: center;
-    padding: 4px;
-    border-right: 1px solid #1b1b1b;
+    padding: 5px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
 }
 
-.win {
+.fa-arrow-up {
     color: green;
-    font-weight: bold;
 }
 
-.lose {
+#favorites-container .fa-arrow-up,
+#live .fa-arrow-up {
+    color: green;
+    animation: blink 2s infinite;
+}
+
+#favorites-container .fa-arrow-down,
+#live .fa-arrow-down {
+    color: red;
+    animation: blink 2s infinite;
+}
+
+#favorites-container .fa-arrows-up-down,
+#live .fa-arrows-up-down {
+    color: orange;
+    animation: blink 2s infinite;
+}
+
+.fa-arrow-down {
     color: red;
 }
 
-.draw {
+.fa-arrows-up-down {
     color: orange;
+}
+
+sup {
+    font-size: 8px;
+}
+
+.fixture:last-child {
+    border-bottom: none;
 }
 
 .home-team img,
@@ -351,11 +386,23 @@ main {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
-    border-left: 1px solid #1b1b1b;
+    border-left: 1px solid #aaa;
 }
 
 .fa-star {
     cursor: pointer;
+}
+
+.match-goals {
+    grid-area: match-goals;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid #111111;
+    border-radius: 3px;
+    padding-top: 5px;
+    background: #111111;
 }
 
 .ht {
@@ -393,6 +440,4 @@ footer {
     align-items: center;
     padding: 5px;
     text-align: center;
-    background: #1b1b1b;
-    color: #ffffff;
 }
