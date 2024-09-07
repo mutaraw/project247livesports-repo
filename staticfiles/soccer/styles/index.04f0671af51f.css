@@ -21,7 +21,7 @@ header {
     grid-area: header;
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: center;
     gap: 5px;
     background: #1b1b1b;
 }

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_celery_results',
     'channels',
+    'pwa',
 ]
 
 MIDDLEWARE = [
@@ -154,3 +156,65 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+# PWA Configuration
+PWA_APP_NAME = '247LiveSports'
+PWA_APP_DESCRIPTION = "Live, Finished, Upcoming Soccer Scores & Fixtures"
+PWA_APP_THEME_COLOR = '#1b1b1b'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'portrait'
+PWA_APP_START_URL = '/'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/soccer/images/icon-144x144.png',
+        'sizes': '144x144',
+        'type': 'image/png'
+    },
+    {
+        'src': '/static/soccer/images/icon-192x192.png',
+        'sizes': '192x192',
+        'type': 'image/png'
+    },
+    {
+        'src': '/static/soccer/images/icon-512x512.png',
+        'sizes': '512x512',
+        'type': 'image/png'
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': '/static/soccer/images/icon-512x512.png',
+        'sizes': '512x512',
+        'type': 'image/png'
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/soccer/images/splash-640x1136.png',
+        'media': '(device-width: 320px) and (device-height: 568px)'
+    }
+]
+PWA_APP_SCREENSHOTS = [
+    {
+        'src': '/static/soccer/images/screenshot1.png',
+        'sizes': '640x1136',
+        'type': 'image/png',
+        'form_factor': 'narrow'  # For mobile view
+    },
+    {
+        'src': '/static/soccer/images/screenshot2.png',
+        'sizes': '750x1334',
+        'type': 'image/png',
+        # 'form_factor': 'narrow'  # For mobile view
+    },
+    {
+        'src': '/static/soccer/images/screenshot-wide.png',
+        'sizes': '1920x1080',
+        'type': 'image/png',
+        'form_factor': 'wide'  # For desktop/wide view
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'en-US'
