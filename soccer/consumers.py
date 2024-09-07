@@ -22,7 +22,10 @@ class FixtureConsumer(AsyncWebsocketConsumer):
 
     @sync_to_async
     def get_fixtures(self):
-        priority_leagues = [1, 2, 3, 848, 39, 78, 140, 135, 61, 88, 94, 144, 71]
+        priority_leagues = [1, 2, 3, 4, 5, 6, 9, 848, 39, 40, 78, 140, 141, 135, 61, 88, 94, 144, 71, 36, 19, 536, 525,
+                            531, 12, 13, 25, 17, 15, 16, 18, 20, 29, 30, 32, 31, 33, 34, 35, 179, 81, 169, 188,
+                            210, 113, 203, 128, 79, 218, 247, 292, 98, 318, 307, 345, 106, 197, 119, 103, 866, 909, 713,
+                            664, 310, 262, 235, ]
         now_time = now()
         past_24_hours = now_time - timedelta(hours=24)
         next_24_hours = now_time + timedelta(hours=24)
